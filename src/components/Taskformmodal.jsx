@@ -19,7 +19,7 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
       await onTaskCreated({ title, description });
       setTitle('');
       setDescription('');
-      onClose(); // Cerrar el modal después de crear
+      onClose();
     } catch (error) {
       alert('Error al crear la tarea');
     } finally {
@@ -40,7 +40,6 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full">
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
@@ -60,10 +59,8 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
           </button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="p-6">
           <div className="space-y-4">
-            {/* Título */}
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
                 <FileText className="w-4 h-4" />
@@ -80,7 +77,6 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
               />
             </div>
 
-            {/* Descripción */}
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
                 <AlignLeft className="w-4 h-4" />
@@ -97,7 +93,6 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
             </div>
           </div>
 
-          {/* Botones */}
           <div className="flex gap-3 mt-6">
             <button
               type="button"
