@@ -10,20 +10,20 @@
 
 ---
 
-## 📸 Vista Previa
+## 📸 Vista Previa: https://todo-app-frontend-bs5a6eaim-jhoseph-zamoras-projects.vercel.app/
 
 Una aplicación de tareas intuitiva con tablero Kanban, estadísticas en tiempo real y diseño responsive.
 
 ### Características Principales
 
-- **Interfaz Drag & Drop Mejorada** - Arrastra tareas entre columnas con detección inteligente
+- **Interfaz Drag & Drop** - Arrastra tareas entre columnas con detección inteligente
 - **Context API** - Manejo de estado global profesional
-- **Estadísticas Detalladas** - Modal con métricas de productividad
-- **Búsqueda y Filtros** - Buscar y ordenar tareas en tiempo real
-- **Edición Inline** - Edita tareas directamente sin modales
+- **Estadísticas detalladas** - Modal con métricas de productividad
+- **Búsqueda y filtros** - Buscar y ordenar tareas en tiempo real
+- **Edición inline** - Edita tareas directamente sin modales
 - **100% Responsive** - Funciona en todos los dispositivos
-- **UI Minimalista** - Diseño moderno con paleta gris/negro
-- **Notificaciones Toast** - Feedback visual instantáneo con react-hot-toast
+- **UI minimalista** - Diseño moderno con paleta gris/negro
+- **Notificaciones toast** - Feedback visual instantáneo con react-hot-toast
 
 ---
 
@@ -130,11 +130,11 @@ frontend/
 
 ### Crear una Nueva Tarea
 
-1. Click en el botón **"Nueva Tarea"**
+1. Click en el botón **"Nueva tarea"**
 2. Se abre un modal
 3. Ingresa el **título** (obligatorio)
 4. Opcionalmente agrega una **descripción**
-5. Click en **"Crear Tarea"**
+5. Click en **"Crear tarea"**
 
 ### Ver Estadísticas Detalladas
 
@@ -148,7 +148,7 @@ frontend/
    - Productividad último mes
    - Promedio diario
 
-### Mover Tareas (Drag & Drop)
+### Mover tareas (Drag & Drop)
 
 1. Haz click en el ícono **≡** (grip) de cualquier tarea
 2. Arrastra la tarea a la columna deseada:
@@ -156,7 +156,7 @@ frontend/
    - **Completadas** (derecha, color verde)
 3. Suelta para cambiar el estado automáticamente
 
-### Editar una Tarea
+### Editar una tarea
 
 1. Pasa el mouse sobre una tarea
 2. Aparecen los botones de acción
@@ -164,14 +164,14 @@ frontend/
 4. Modifica título o descripción
 5. Click en **"Guardar"** o **"Cancelar"**
 
-### Eliminar una Tarea
+### Eliminar una tarea
 
 1. Pasa el mouse sobre una tarea
 2. Click en el ícono de **basura** (Delete)
 3. Aparece un toast de confirmación
 4. Click en **"Eliminar"** para confirmar o **"Cancelar"**
 
-### Buscar y Filtrar Tareas
+### Buscar y filtrar tareas
 
 1. Usa la **barra de búsqueda** para filtrar por título o descripción
 2. Selecciona el **orden** en el dropdown:
@@ -183,9 +183,9 @@ frontend/
 
 ---
 
-## 🎨 Componentes Principales
+## 🎨 Componentes principales
 
-### TaskContext.jsx (NEW!)
+### TaskContext.jsx
 Context API para estado global:
 - Gestiona todas las tareas
 - Operaciones CRUD centralizadas
@@ -197,14 +197,12 @@ Context API para estado global:
 Componente principal simplificado:
 - Consume TaskContext
 - Renderiza la UI principal
-- Sin lógica de negocio (movida al contexto)
 
 ### KanbanBoard.jsx
 Tablero Kanban con drag & drop mejorado:
 - Usa `closestCenter` para detección inteligente
 - Gestiona arrastre con `useDraggable`
 - Divide tareas en pendientes/completadas
-- Sin reordenamiento interno (solo entre columnas)
 
 ### DraggableTaskItem.jsx
 Tarjeta de tarea arrastrable:
@@ -232,9 +230,7 @@ Sistema de búsqueda y filtros:
 
 ---
 
-## 🔧 React Hooks Utilizados
-
-Este proyecto demuestra el uso profesional de React Hooks:
+## 🔧 React Hooks utilizados
 
 | Hook | Componente | Uso |
 |------|-----------|-----|
@@ -254,11 +250,9 @@ Este proyecto demuestra el uso profesional de React Hooks:
 | `useDroppable` | BoardColumn.jsx | Zona de drop para tareas |
 | `useSensor` | KanbanBoard.jsx | Sensores para drag & drop |
 
-**Total:** 6 hooks nativos de React + 3 hooks de DnD Kit + 1 custom hook (`useTasks`)
-
 ---
 
-## 📦 Scripts Disponibles
+## 📦 Scripts disponibles
 
 ```bash
 # Iniciar servidor de desarrollo
@@ -276,7 +270,7 @@ npm run lint
 
 ---
 
-## 🐛 Solución de Problemas
+## 🐛 Solución de problemas
 
 ### Error: "Network Error" o "Failed to fetch"
 
