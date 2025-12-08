@@ -42,11 +42,11 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
       <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center">
               <Plus className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-gray-800">Nueva Tarea</h2>
+              <h2 className="text-xl font-bold text-gray-800">Nueva tarea</h2>
               <p className="text-xs text-gray-500">Completa los campos para crear tu tarea</p>
             </div>
           </div>
@@ -71,7 +71,7 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Ej: Comprar leche"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition"
                 disabled={loading}
                 autoFocus
               />
@@ -87,7 +87,7 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Ej: Ir al supermercado después del trabajo"
                 rows="4"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent transition resize-none"
                 disabled={loading}
               />
             </div>
@@ -105,7 +105,7 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
             <button
               type="submit"
               disabled={loading || !title.trim()}
-              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30"
+              className="flex-1 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-semibold py-3 px-4 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-gray-500/30"
             >
               {loading ? (
                 <>
@@ -115,7 +115,7 @@ function TaskFormModal({ isOpen, onClose, onTaskCreated }) {
               ) : (
                 <>
                   <Plus className="w-5 h-5" />
-                  Crear Tarea
+                  Crear tarea
                 </>
               )}
             </button>

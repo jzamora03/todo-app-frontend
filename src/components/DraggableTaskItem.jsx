@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { useDraggable } from '@dnd-kit/core';
 import { Trash2, Clock, Edit2, Save, X, GripVertical } from 'lucide-react';
 
 function DraggableTaskItem({ task, onUpdate, onDelete }) {
@@ -13,14 +12,12 @@ function DraggableTaskItem({ task, onUpdate, onDelete }) {
     listeners,
     setNodeRef,
     transform,
-    transition,
     isDragging,
-  } = useSortable({ id: task._id });
+  } = useDraggable({ id: task._id });
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  } : undefined;
 
   const handleSave = async () => {
     if (!editTitle.trim()) {
@@ -90,8 +87,8 @@ function DraggableTaskItem({ task, onUpdate, onDelete }) {
       ref={setNodeRef}
       style={style}
       className={`bg-white rounded-xl shadow-sm border-2 p-4 hover:shadow-lg transition-all duration-200 group ${
-        isDragging 
-          ? 'opacity-30 border-blue-400 pointer-events-none' 
+        isDragging
+          ? 'opacity-30 border-blue-400 scale-105 shadow-2xl'
           : 'border-gray-200'
       }`}
     >
@@ -99,12 +96,12 @@ function DraggableTaskItem({ task, onUpdate, onDelete }) {
         <button
           {...attributes}
           {...listeners}
-          className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-blue-600 hover:bg-blue-50 mt-1 p-1 rounded touch-none transition-all"
+          className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-blue-600 hover:bg-blue-50 mt-1 p-2 rounded-lg touch-none transition-all flex-shrink-0"
           title="Arrastra para mover"
         >
           <GripVertical className="w-5 h-5" />
         </button>
-        
+
         <div className="flex-1 min-w-0">
           <h3 className="text-base font-semibold text-gray-800 mb-1 break-words">
             {task.title}
@@ -126,7 +123,7 @@ function DraggableTaskItem({ task, onUpdate, onDelete }) {
             </span>
           </div>
         </div>
-        
+
         <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={() => setIsEditing(true)}

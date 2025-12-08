@@ -1,15 +1,17 @@
-import { DndContext, DragOverlay, pointerWithin, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { DndContext, DragOverlay, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { useState } from 'react';
 import BoardColumn from './BoardColumn';
+import { useTasks } from '../context/TaskContext';
 
-function KanbanBoard({ tasks, onUpdate, onDelete, onToggleComplete }) {
+function KanbanBoard() {
+  const { filteredTasks: tasks, updateTask: onUpdate, deleteTask: onDelete, toggleTask: onToggleComplete } = useTasks();
   const [activeId, setActiveId] = useState(null);
   const [overId, setOverId] = useState(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8,
+        distance: 3,
       },
     })
   );
@@ -58,7 +60,7 @@ function KanbanBoard({ tasks, onUpdate, onDelete, onToggleComplete }) {
   return (
     <DndContext
       sensors={sensors}
-      collisionDetection={pointerWithin}
+      collisionDetection={closestCenter}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}

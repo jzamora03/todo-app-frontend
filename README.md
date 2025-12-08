@@ -16,13 +16,14 @@ Una aplicación de tareas intuitiva con tablero Kanban, estadísticas en tiempo 
 
 ### Características Principales
 
-- **Interfaz Drag & Drop** - Arrastra tareas entre columnas
+- **Interfaz Drag & Drop Mejorada** - Arrastra tareas entre columnas con detección inteligente
+- **Context API** - Manejo de estado global profesional
 - **Estadísticas Detalladas** - Modal con métricas de productividad
-- **Búsqueda y Filtros** - Buscar y ordenar tareas
-- **Edición Inline** - Edita tareas directamente
+- **Búsqueda y Filtros** - Buscar y ordenar tareas en tiempo real
+- **Edición Inline** - Edita tareas directamente sin modales
 - **100% Responsive** - Funciona en todos los dispositivos
-- **UI Moderna** - Gradientes, animaciones y efectos
-- **Notificaciones Toast** - Feedback visual instantáneo
+- **UI Minimalista** - Diseño moderno con paleta gris/negro
+- **Notificaciones Toast** - Feedback visual instantáneo con react-hot-toast
 
 ---
 
@@ -96,21 +97,24 @@ frontend/
 ├── src/
 │   ├── components/           # Componentes React
 │   │   ├── BoardColumn.jsx          # Columna del tablero Kanban
-│   │   ├── DraggableTaskItem.jsx    # Tarea arrastrable
+│   │   ├── DraggableTaskItem.jsx    # Tarea arrastrable (useDraggable)
 │   │   ├── Filters.jsx              # Búsqueda y filtros
-│   │   ├── KanbanBoard.jsx          # Tablero principal
+│   │   ├── KanbanBoard.jsx          # Tablero principal con DnD
 │   │   ├── Statistics.jsx           # Botón de estadísticas
-│   │   ├── StatisticsModal.jsx      # Modal de estadísticas
+│   │   ├── StatisticsModal.jsx      # Modal de estadísticas detalladas
 │   │   ├── TaskForm.jsx             # Botón crear tarea
 │   │   ├── TaskFormModal.jsx        # Modal crear tarea
-│   │   ├── TaskItem.jsx             # Item de tarea
-│   │   └── TaskList.jsx             # Lista de tareas
+│   │   ├── TaskItem.jsx             # Item de tarea (legacy)
+│   │   └── TaskList.jsx             # Lista de tareas (legacy)
+│   │
+│   ├── context/              # Context API
+│   │   └── TaskContext.jsx          # Estado global de tareas
 │   │
 │   ├── services/             # Servicios y API
 │   │   └── api.js                   # Llamadas al backend
 │   │
 │   ├── App.jsx              # Componente principal
-│   ├── main.jsx             # Punto de entrada
+│   ├── main.jsx             # Punto de entrada + TaskProvider
 │   └── index.css            # Estilos globales
 │
 ├── .gitignore
@@ -181,33 +185,49 @@ frontend/
 
 ## 🎨 Componentes Principales
 
+### TaskContext.jsx (NEW!)
+Context API para estado global:
+- Gestiona todas las tareas
+- Operaciones CRUD centralizadas
+- Filtros y ordenamiento con useMemo
+- Loading y error states
+- Custom hook `useTasks()`
+
 ### App.jsx
-Componente principal que maneja:
-- Estado global de tareas
-- Carga inicial de datos
-- Operaciones CRUD
-- Filtros y ordenamiento
+Componente principal simplificado:
+- Consume TaskContext
+- Renderiza la UI principal
+- Sin lógica de negocio (movida al contexto)
 
 ### KanbanBoard.jsx
-Tablero Kanban con drag & drop:
-- Gestiona el arrastre de tareas
+Tablero Kanban con drag & drop mejorado:
+- Usa `closestCenter` para detección inteligente
+- Gestiona arrastre con `useDraggable`
 - Divide tareas en pendientes/completadas
-- Overlay visual al arrastrar
+- Sin reordenamiento interno (solo entre columnas)
+
+### DraggableTaskItem.jsx
+Tarjeta de tarea arrastrable:
+- Hook `useDraggable` de @dnd-kit
+- Edición inline
+- Acciones de hover (editar/eliminar)
 
 ### Statistics.jsx
-Botón que muestra el progreso:
+Botón de estadísticas:
+- Consume tasks del contexto
 - Calcula porcentaje de completación
 - Abre modal de estadísticas detalladas
 
 ### TaskForm.jsx
 Botón para crear tareas:
+- Consume `createTask` del contexto
 - Abre modal de creación
-- Diseño minimalista
+- Diseño minimalista gris/negro
 
 ### Filters.jsx
 Sistema de búsqueda y filtros:
 - Búsqueda en tiempo real
-- Ordenamiento múltiple
+- 4 opciones de ordenamiento
 - Limpieza de filtros
 
 ---
@@ -218,18 +238,23 @@ Este proyecto demuestra el uso profesional de React Hooks:
 
 | Hook | Componente | Uso |
 |------|-----------|-----|
-| `useState` | App.jsx | Gestión de tareas, loading, error, filtros |
-| `useEffect` | App.jsx | Carga inicial de tareas desde API |
-| `useMemo` | App.jsx | Optimización de filtrado y ordenamiento |
+| `useState` | TaskContext.jsx | Gestión de tareas, loading, error, filtros |
+| `useEffect` | TaskContext.jsx | Carga inicial de tareas desde API |
+| `useMemo` | TaskContext.jsx | Optimización de filtrado y ordenamiento |
+| `useContext` | Múltiples | Consumir el TaskContext |
+| `createContext` | TaskContext.jsx | Crear el contexto de tareas |
+| `useState` | App.jsx | Solo para UI local (reducido) |
 | `useState` | TaskForm.jsx | Control del modal de creación |
 | `useState` | Statistics.jsx | Control del modal de estadísticas |
 | `useState` | TaskFormModal.jsx | Formulario de nueva tarea |
 | `useState` | Filters.jsx | Estado de búsqueda y filtros |
 | `useState` | DraggableTaskItem.jsx | Modo edición de tareas |
-| `useSortable` | DraggableTaskItem.jsx | Funcionalidad drag & drop |
+| `useState` | KanbanBoard.jsx | Estado del drag activo |
+| `useDraggable` | DraggableTaskItem.jsx | Funcionalidad drag & drop |
 | `useDroppable` | BoardColumn.jsx | Zona de drop para tareas |
+| `useSensor` | KanbanBoard.jsx | Sensores para drag & drop |
 
-**Total:** 3 hooks diferentes (useState, useEffect, useMemo) + hooks de DnD Kit
+**Total:** 6 hooks nativos de React + 3 hooks de DnD Kit + 1 custom hook (`useTasks`)
 
 ---
 
@@ -302,14 +327,8 @@ npm run build
 
 ---
 
-## 📝 Características técnicas
 
-### Arquitectura de Componentes
 
-- **Componentes Separados:** Arquitectura modular
-- **Props Drilling:** Paso de props de padres a hijos
-- **Estado Local:** useState en cada componente
-- **Memoización:** useMemo para optimización
 
 
 
